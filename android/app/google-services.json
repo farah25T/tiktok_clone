@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "396074755874",
+    "project_id": "tiktok-clone-304e5",
+    "storage_bucket": "tiktok-clone-304e5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:396074755874:android:9ba89bd83035b6f00da77b",
+        "android_client_info": {
+          "package_name": "com.example.tiktok"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJnvrE8mS4ral_LWWa7aPwmRWmacByKrA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
