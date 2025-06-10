@@ -11,7 +11,6 @@ class VideoFeedDataSource extends IVideoFeedDataSource {
   @override
   Future<List<VideoItem>> fetchVideos({int limit = 2}) async {
     _lastDocument = null;
-    print('Fetching initial videos with limit: $limit');
     return _fetch(limit: limit);
   }
 
@@ -33,7 +32,6 @@ class VideoFeedDataSource extends IVideoFeedDataSource {
       }
 
       final snapshot = await query.get();
-      print('Fetched ${snapshot.size} docs');
 
       if (snapshot.docs.isEmpty) return [];
 
@@ -43,7 +41,6 @@ class VideoFeedDataSource extends IVideoFeedDataSource {
       for (final doc in snapshot.docs) {
         try {
           final item = VideoItem.fromFirestore(doc);
-          print('helllooooo $item');
           items.add(item);
         } catch (e) {
           print('VideoItem parse error: $e');
