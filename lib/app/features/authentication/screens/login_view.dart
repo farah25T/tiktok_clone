@@ -1,4 +1,3 @@
-// lib/app/features/authentication/screens/login_view.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -14,7 +13,6 @@ class LoginView extends ConsumerWidget {
     final form = ref.watch(loginFormProvider);
     final notifier = ref.read(loginFormProvider.notifier);
 
-    // On success ➜ jump straight to the feed tab.
     ref.listen<AuthFormState>(loginFormProvider, (prev, next) {
       if (next.status == AuthFormStatus.success) {
         context.goNamed(RouterEnum.videoFeedView.name);
@@ -57,7 +55,6 @@ class LoginView extends ConsumerWidget {
             ),
             const SizedBox(height: 12),
             TextButton(
-              // quick link to registration
               onPressed: () => context.goNamed(RouterEnum.registerView.name),
               child: const Text("Pas de compte ? S'inscrire"),
             ),

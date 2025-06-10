@@ -62,7 +62,6 @@ class InteractionButtons extends ConsumerWidget {
           ),
           const SizedBox(height: 20),
 
-          // Dislike button
           InteractionButton(
             icon: isDisliked ? Icons.thumb_down : Icons.thumb_down_off_alt,
             count: displayedDislikeCount,
@@ -77,7 +76,6 @@ class InteractionButtons extends ConsumerWidget {
           ),
           const SizedBox(height: 20),
 
-          // Comment button
           InteractionButton(
             icon: LucideIcons.messageCircle,
             count: 0,
@@ -85,7 +83,6 @@ class InteractionButtons extends ConsumerWidget {
           ),
           const SizedBox(height: 20),
 
-          // Share button
           InteractionButton(
             icon: LucideIcons.send,
             count: shareCount,
@@ -93,7 +90,6 @@ class InteractionButtons extends ConsumerWidget {
           ),
           const SizedBox(height: 20),
 
-          // Bookmark button
           InkWell(
             borderRadius: BorderRadius.circular(24),
             onTap: () {

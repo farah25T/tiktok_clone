@@ -41,7 +41,6 @@ class ReactionDataSource implements IReactionDataSource {
         });
       }
 
-      // apply new
       if (type != null) {
         transaction.set(reactionRef, {
           'type': type,

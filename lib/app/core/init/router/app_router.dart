@@ -16,9 +16,6 @@ import 'package:tiktok/app/presentation/widgets/bottom_navigation_widget.dart';
 final _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 final _shellNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'shell');
 
-// lib/app/core/init/router/app_router.dart
-// …imports…
-
 class AppRouter {
   late final GoRouter router;
   AppRouter() {
@@ -26,23 +23,21 @@ class AppRouter {
       navigatorKey: _rootNavigatorKey,
       initialLocation: RouterEnum.dashboardView.routeName,
       routes: [
-        // ───────── standalone screens (root) ─────────
         GoRoute(
-          path: RouterEnum.registerView.routeName, // '/register'
+          path: RouterEnum.registerView.routeName,
           name: RouterEnum.registerView.name,
           parentNavigatorKey: _rootNavigatorKey,
           pageBuilder: (c, s) =>
               customPageBuilderWidget(c, s, const RegisterView()),
         ),
         GoRoute(
-          path: RouterEnum.loginView.routeName, // '/login'  ← NEW
+          path: RouterEnum.loginView.routeName,
           name: RouterEnum.loginView.name,
           parentNavigatorKey: _rootNavigatorKey,
           pageBuilder: (c, s) =>
               customPageBuilderWidget(c, s, const LoginView()),
         ),
 
-        // ───────── bottom-nav shell (feed, dashboard, profile) ─────────
         ShellRoute(
           navigatorKey: _shellNavigatorKey,
           builder: (c, s, child) => BottomNavigationWidget(

@@ -53,7 +53,7 @@ class VideoFeedDataSource extends IVideoFeedDataSource {
       return items;
     } catch (e, st) {
       print('Firestore error: $e\n$st');
-      rethrow; // or return [];
+      rethrow;
     }
   }
 }

@@ -36,13 +36,9 @@ class _VideoFeedViewState extends ConsumerState<VideoFeedView>
     super.dispose();
   }
 
-  /* ---------- controller helpers ---------- */
-
   Future<VideoPlayerController> _initController(VideoItem v) {
-    print("item in _initController: ${v.title}");
     return _cache.put(v.id, () async {
       final file = await _notifier.getCachedVideoFile(v.url);
-      print("Initializing controller for video at: ${file.path}");
       final controller = VideoPlayerController.file(file);
       await controller.initialize();
       controller.setLooping(true);
@@ -82,8 +78,6 @@ class _VideoFeedViewState extends ConsumerState<VideoFeedView>
 
     _notifier.onPageChanged(index);
   }
-
-  /* ---------- build ---------- */
 
   @override
   Widget build(BuildContext context) {

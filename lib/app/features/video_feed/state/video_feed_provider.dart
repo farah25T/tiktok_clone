@@ -1,13 +1,11 @@
-// video_feed_notifier.dart
 import 'dart:collection';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart'; // keep your state class
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
-import 'package:tiktok/app/domain/models/video_item.dart';
 import 'package:tiktok/app/domain/repositories/i_video_feed_repo.dart';
 import 'package:tiktok/app/features/video_feed/state/video_feed_state.dart';
 
@@ -50,7 +48,6 @@ class VideoFeedNotifier extends StateNotifier<VideoFeedState> {
 
   void onPageChanged(int newIndex) async {
     state = state.copyWith(currentVideoIndex: newIndex);
-    print('Page changed to index: $newIndex');
     _preloadNextVideos();
 
     if (!_isPreloadingMore &&
@@ -66,7 +63,6 @@ class VideoFeedNotifier extends StateNotifier<VideoFeedState> {
     state = state.copyWith(isLoading: true);
     try {
       final videos = await _repo.fetchVideos();
-      print('Fetched ${videos} videos');
       final hasMore = videos.length == 2;
       state = state.copyWith(
         isLoading: false,
@@ -74,7 +70,6 @@ class VideoFeedNotifier extends StateNotifier<VideoFeedState> {
         hasMoreVideos: hasMore,
         currentVideoIndex: 0,
       );
-      print('Initial videos loaded: ${state.videos.length}');
       if (videos.isNotEmpty) _preloadNextVideos();
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
@@ -85,13 +80,11 @@ class VideoFeedNotifier extends StateNotifier<VideoFeedState> {
     if (state.videos.isEmpty) return;
 
     final currentIndex = state.currentVideoIndex;
-    print('Preloading videos after index $currentIndex');
     final urls = state.videos
         .skip(currentIndex + 1)
         .take(2)
         .map((v) => v.url)
         .where((u) => !_preloadedFiles.containsKey(u));
-    print('URLs to preload: $urls');
     for (final url in urls) {
       if (!_preloadQueue.contains(url)) {
         _preloadQueue.add(url);
@@ -99,29 +92,7 @@ class VideoFeedNotifier extends StateNotifier<VideoFeedState> {
         _preloadVideo(url);
       }
     }
-    print('Preload queue size: ${_preloadQueue}');
   }
-
-  //  Future<void> _preloadNextVideos(List<VideoItem> videos, int curentIndex) async {
-  //   if (state.videos.isEmpty) return;
-
-  //   final currentIndex = state.currentVideoIndex;
-  //   print('Preloading videos after index $currentIndex');
-  //   final urls = state.videos
-  //       .skip(currentIndex + 1)
-  //       .take(2)
-  //       .map((v) => v.url)
-  //       .where((u) => !_preloadedFiles.containsKey(u));
-  //   print('URLs to preload: $urls');
-  //   for (final url in urls) {
-  //     if (!_preloadQueue.contains(url)) {
-  //       _preloadQueue.add(url);
-
-  //       _preloadVideo(url);
-  //     }
-  //   }
-  //   print('Preload queue size: ${_preloadQueue}');
-  // }
 
   Future<void> _preloadVideo(String url) async {
     try {
@@ -138,14 +109,12 @@ class VideoFeedNotifier extends StateNotifier<VideoFeedState> {
   }
 
   Future<File> _getCachedFile(String url) async {
-    // ➊ In-memory hit
     final cached = _preloadedFiles[url];
     if (cached != null) {
       debugPrint('✅ RAM cache → $url');
       return cached;
     }
 
-    // ➋ Disk cache or network
     final cache = DefaultCacheManager();
 
     try {
@@ -157,20 +126,16 @@ class VideoFeedNotifier extends StateNotifier<VideoFeedState> {
 
       debugPrint('📥 Saved $url → ${file.path}');
       return file;
-    }
-    // ─────── Specific error buckets ───────
-    on HttpException catch (e, st) {
+    } on HttpException catch (e, st) {
       debugPrint('🚫 HTTP error ($e) while fetching $url\n$st');
-      rethrow; // propagate
+      rethrow;
     } on ClientException catch (e, st) {
       debugPrint('🌐 Network / CORS failure for $url → $e\n$st');
       rethrow;
     } on FileSystemException catch (e, st) {
       debugPrint('💾 File-system error caching $url → $e\n$st');
       rethrow;
-    }
-    // Fallback: anything else
-    catch (e, st) {
+    } catch (e, st) {
       debugPrint('❗ Unexpected error for $url → $e\n$st');
       rethrow;
     }
