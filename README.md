@@ -36,3 +36,13 @@ Run this command in the project root:
 
 ```bash
 flutterfire configure
+
+### 🎥 Seed Firestore with Initial Videos
+
+Since the app currently does **not include a video upload functionality**, you can **manually seed the Firestore database** with sample videos using a provided script.
+
+To seed the database, run the following command from the project root:
+
+```bash
+flutter run -t tool/upload_initial_videos.dart
+
