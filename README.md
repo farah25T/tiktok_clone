@@ -36,6 +36,7 @@ Run this command in the project root:
 
 ```bash
 flutterfire configure
+```
 
 ### 🎥 Seed Firestore with Initial Videos
 
