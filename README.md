@@ -26,7 +26,7 @@ This project uses [Firebase](https://firebase.google.com/) with Flutter via the 
 
 #### 2. Enable Firebase Services
 
-- **Authentication** → Enable **Anonymous** or **Email/Password**
+- **Authentication** → Enable **Anonymous** and **Email/Password**
 - **Firestore Database** → Create DB (test mode for dev)
 - **Storage** → Get Started (test mode)
 
